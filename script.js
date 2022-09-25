@@ -104,6 +104,8 @@ const searchInput = document.querySelector('#search-input');
 const nothingFound = document.querySelector('#nothing-found');
 const sortSelect = document.querySelector('#sort');
 const container = document.querySelector('#shop-items');
+const currentSearch = document.querySelector('#search-result');
+const currentAmount = document.querySelector('#amount');
 
 
 sortSelect.addEventListener("change", (event) => {
@@ -207,10 +209,21 @@ function renderItems() {
 
 
 function search() {
+    currentAmount.innerHTML = '';
+
     const input = searchInput.value;
+    searchInput.value = '';
+
     const filter = filterByTitle(items, input);
     currentState = filter;
+
     sortSelect.selectedIndex = 0;
+    currentSearch.textContent = (`Поиск по "${input}"`);
+
+    if (currentState.length !== 0) {
+        currentAmount.textContent = (`Найдено товаров: ${currentState.length}`);
+    }
+
     renderItems();
 };
 
